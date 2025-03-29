@@ -1,0 +1,4 @@
+日本語の音声処理技術は、自然言語処理の一部です。
+
+--- This is a placeholder for text-to-speech output ---
+--- To enable actual TTS, install the required libraries ---

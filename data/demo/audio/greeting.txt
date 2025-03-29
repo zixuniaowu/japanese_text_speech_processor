@@ -1,0 +1,4 @@
+こんにちは、私は音声合成システムです。
+
+--- This is a placeholder for text-to-speech output ---
+--- To enable actual TTS, install the required libraries ---

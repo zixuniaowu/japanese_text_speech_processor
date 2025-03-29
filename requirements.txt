@@ -1,0 +1,26 @@
+# Core requirements
+pathlib>=1.0.1
+typing>=3.7.4.3
+
+# Main text processing
+pykakasi>=2.2.1  # For kanji/kana/romaji conversion
+janome>=0.4.1    # Pure Python Japanese text analyzer
+
+# Speech processing
+gtts>=2.3.1      # Google Text-to-Speech (requires internet connection)
+mutagen>=1.45.1  # For MP3 file analysis (optional)
+
+# Optional text processing (uncomment if needed)
+# mecab-python3>=1.0.5  # For Japanese text segmentation
+# fugashi>=1.1.0        # Alternative Japanese tokenizer
+# unidic>=1.0.3         # Dictionary for Japanese tokenization
+
+# Optional alternatives for speech processing (uncomment if needed)
+# pyttsx3>=2.90         # Local text-to-speech (limited Japanese support)
+# SpeechRecognition>=3.8.1  # Speech recognition
+# librosa>=0.8.1        # Audio analysis
+# soundfile>=0.10.3.post1  # Audio file handling
+# numpy>=1.21.0        # Required for audio processing
+
+# Testing
+pytest>=7.0.0

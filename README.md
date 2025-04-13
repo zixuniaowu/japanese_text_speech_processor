@@ -1,219 +1,260 @@
-# Japanese Text and Speech Processor
+# 日本語テキスト・音声処理ツール (Japanese Text and Speech Processor)
 
-本项目是一个日语文本和语音处理工具，支持日语文本处理、文本到语音转换等功能。
+日本語のテキストと音声を総合的に処理するツールで、テキスト分析、テキスト読み上げ変換、PowerPointのビデオ変換など、様々な機能をサポートしています。
 
-## 功能特点
+## 主な機能
 
-- 日语文本文件的读取和处理
-- Markdown 格式的日语文本结构解析
-- 使用 Google Text-to-Speech 进行文本到语音转换
-- 日语文本的平假名、片假名和罗马字转换
-- 音频文件的基本分析
-- **Markdown 文件直接转换为语音**
+- **テキスト処理**：日本語テキストファイルの読み込みと分析
+- **Markdown解析**：日本語Markdownファイル構造の解析
+- **音声合成**：日本語テキストを音声に変換（Google TTSを使用）
+- **テキスト変換**：日本語テキストをひらがな、カタカナ、ローマ字に変換
+- **Markdownから音声へ**：Markdownドキュメントを直接音声に変換
+- **PPTからビデオへ**：PowerPointプレゼンテーションを日本語ナレーション付きビデオに変換
 
-## 安装
+## インストールガイド
 
-### 基本安装
+### 基本インストール
 
 ```bash
-# 克隆项目（如已下载则跳过此步骤）
-git clone <repository-url>
+# プロジェクトのクローン
+git clone https://github.com/yourusername/japanese_text_speech_processor.git
 cd japanese_text_speech_processor
 
-# 安装基本依赖
+# 依存関係のインストール
 pip install -r requirements.txt
+```
 
-# 安装语音处理所需的依赖
+### 特定機能のためのインストール
+
+必要な機能に応じて、特定の依存パッケージをインストールします：
+
+```bash
+# 音声合成機能
 pip install gtts
-```
 
-### 文本处理功能（可选）
-
-如果需要使用日语文本转换功能（如转换为平假名、罗马字等）：
-
-```bash
+# テキスト変換機能
 pip install janome pykakasi
+
+# PPTからビデオへの変換機能
+pip install python-pptx Pillow moviepy
 ```
 
-## 使用方法
+## 使用ガイド
 
-### 文本处理
-
-读取日语文本文件：
+### テキスト処理
 
 ```bash
+# 日本語テキストファイルの読み込み
 python main.py text --read sample_japanese.txt
-```
 
-分析日语 Markdown 文件结构：
-
-```bash
+# Markdownファイルの分析
 python main.py text --read-markdown sample_japanese.md
+
+# 日本語テキスト変換
+python main.py text --convert "日本語の自然言語処理" --to-hiragana
+python main.py text --convert "日本語の自然言語処理" --to-romaji
+python main.py text --convert "日本語の自然言語処理" --to-katakana
 ```
 
-文本转换（需要安装 janome 和 pykakasi）：
+### 音声合成
 
 ```bash
-# 将文本转换为平假名
-python main.py text --convert "日本語の処理" --to-hiragana
-
-# 将文本转换为罗马字
-python main.py text --convert "日本語の処理" --to-romaji
-
-# 将文本转换为片假名
-python main.py text --convert "日本語の処理" --to-katakana
-
-# 分词分析
-python main.py text --convert "日本語の処理技術は面白いです。" --tokenize
-```
-
-### 语音处理
-
-将文本转换为语音（需要互联网连接）：
-
-```bash
-# 直接转换文本
+# テキストを直接音声に変換
 python main.py speech --text-to-speech "こんにちは、世界！" --output hello.mp3
 
-# 从文件转换
+# テキストファイルを音声に変換
 python main.py speech --text-to-speech sample_japanese.txt --output sample.mp3
 ```
 
-分析音频文件：
+### Markdownから音声への変換
 
 ```bash
-python main.py speech --analyze-audio data/audio/hello.mp3
+# Markdownドキュメントを音声に変換
+python markdown_to_speech.py sample_japanese.md --output japanese_audio.mp3
+
+# 処理された純テキストも保存
+python markdown_to_speech.py sample_japanese.md --output japanese_audio.mp3 --clean
 ```
 
-### Markdown转语音
-
-将Markdown格式的日语文本直接转换为语音：
+### PowerPointからビデオへの変換
 
 ```bash
-# 基本用法 - 将Markdown文件转换为MP3
-python markdown_to_speech.py sample_japanese.md --output japanese_sample.mp3
+# PPTを日本語ナレーション付きビデオに変換
+python ppt_to_narrated_video.py presentation.pptx --output narrated_video.mp4
 
-# 同时保存处理后的纯文本
-python markdown_to_speech.py sample_japanese.md --output japanese_sample.mp3 --clean
+# 各スライドの最小表示時間（秒）を設定
+python ppt_to_narrated_video.py presentation.pptx --output narrated_video.mp4 --min-duration 5.0
 
-# 指定不同的输出文件名
-python markdown_to_speech.py data/text/sample_japanese.md --output data/audio/markdown_speech.mp3
+# 一時ファイルを保持（デバッグ用）
+python ppt_to_narrated_video.py presentation.pptx --output narrated_video.mp4 --keep-temp
 ```
 
-这个脚本会：
-1. 读取指定的Markdown文件
-2. 清理Markdown格式标记以获取纯文本
-3. 使用Google TTS引擎将文本转换为语音
-4. 保存为MP3文件（如使用`--clean`选项，还会保存处理后的纯文本）
-
-### 演示
-
-运行完整的 gTTS 演示（需要互联网连接）：
+### デモスクリプト
 
 ```bash
+# Google TTSデモの実行
 python demo_gtts.py
-```
 
-使用主程序运行语音演示：
-
-```bash
+# 音声処理デモの実行
 python main.py demo --speech
-```
 
-运行文本处理演示：
-
-```bash
+# テキスト処理デモの実行
 python main.py demo --text
 ```
 
-## 项目结构
+## 機能詳細
+
+### テキスト処理機能
+
+- **テキスト読み込み**：UTF-8エンコードの日本語テキストファイルをサポート
+- **Markdown解析**：見出し、リスト、コードブロックなどのMarkdown要素を識別
+- **テキスト変換**：
+  - 漢字→ひらがな
+  - 漢字→カタカナ
+  - 日本語→ローマ字（romaji）
+- **テキスト分析**：日本語NLPツールを使用した品詞分析
+
+### 音声合成機能
+
+- **Google TTS**：Googleのオンラインサービスを使用した高品質な日本語音声合成
+- **MP3生成**：MP3形式の音声ファイルの作成
+- **音声分析**：生成された音声ファイル属性の分析
+
+### Markdownから音声への機能
+
+- **Markdown解析**：Markdown形式要素のインテリジェントな処理
+- **フォーマットクリーニング**：音声読み上げに適さない形式要素の削除
+- **バッチ変換**：Markdownドキュメント全体を流暢な音声ナレーションに変換
+
+### PPTからビデオへの機能
+
+- **テキスト抽出**：PPTスライドからテキストコンテンツを抽出
+- **音声生成**：各スライドに対応する音声解説を作成
+- **スライドエクスポート**：PPTスライドを高品質画像としてエクスポート
+- **ビデオ合成**：スライド画像と音声を完全なビデオに合成
+- **LibreOffice統合**：LibreOffice（利用可能な場合）を使用して高品質スライド画像をエクスポート
+
+## プロジェクト構造
 
 ```
 japanese_text_speech_processor/
 │
-├── data/                # 数据目录
-│   ├── audio/           # 生成的音频文件
-│   ├── demo/            # 演示生成的文件
-│   │   └── gtts/        # gTTS演示文件
-│   ├── processed/       # 处理后的数据
-│   └── text/            # 文本文件
+├── data/                # データディレクトリ
+│   ├── audio/           # 音声ファイル
+│   ├── text/            # テキストファイル
+│   ├── processed/       # 処理済みデータ
+│   └── demo/            # デモファイル
 │
-├── src/                 # 源代码
-│   ├── text_processor.py          # 文本处理模块
-│   ├── speech_processor_gtts.py   # 使用gTTS的语音处理模块
-│   └── japanese_phonetics.py      # 日语音韵转换模块
+├── src/                 # ソースコード
+│   ├── text_processor.py        # テキスト処理モジュール
+│   ├── speech_processor_gtts.py # 音声処理モジュール
+│   └── japanese_phonetics.py    # 日本語音韻変換モジュール
 │
-├── examples/            # 示例脚本
-├── tests/               # 测试文件
-├── main.py              # 主程序
-├── demo_gtts.py         # gTTS演示脚本
-├── markdown_to_speech.py # Markdown转语音脚本
-├── requirements.txt     # 依赖列表
-└── README.md            # 本文件
+├── examples/            # サンプルスクリプト
+├── tests/               # テストファイル
+│
+├── main.py                  # メインプログラム
+├── markdown_to_speech.py    # Markdownから音声への変換スクリプト
+├── ppt_to_narrated_video.py # PPTからビデオへの変換スクリプト
+├── demo_gtts.py             # Google TTSデモ
+│
+├── requirements.txt     # 依存パッケージリスト
+└── README.md            # プロジェクト説明ドキュメント
 ```
 
-## 注意事项
+## 使用例
 
-1. 语音合成功能需要互联网连接，因为它使用 Google 的在线服务。
-
-2. gTTS 只能生成 MP3 格式的文件，不能直接生成 WAV 文件。如果指定了 .wav 扩展名，程序会创建一个提示文件，并将实际音频保存为 MP3。
-
-3. 为获得最佳效果，请确保安装了所有推荐的依赖包：
-   - 基本文本处理：pathlib, typing
-   - 日语文本分析：janome, pykakasi
-   - 语音合成：gtts
-
-4. 所有生成的音频文件旁会创建同名的 .txt 文件，包含原始文本内容，便于参考。
-
-5. Markdown转语音过程中，脚本会尝试智能处理Markdown格式（如移除代码块、转换列表项为句子等），以提供更自然的语音效果。
-
-## 示例
-
-### 文本到语音转换示例
+### 音声合成の例
 
 ```bash
-# 将问候语转换为语音
-python main.py speech --text-to-speech "おはようございます。今日の天気はいいですね。" --output greeting.mp3
+# 挨拶音声の生成
+python main.py speech --text-to-speech "おはようございます。今日もいい天気ですね。" --output greeting.mp3
 
-# 将诗歌转换为语音
-python main.py speech --text-to-speech "桜の花が春風に舞い散る様子は、とても美しいです。" --output poem.mp3
+# 技術紹介音声の生成
+python main.py speech --text-to-speech "人工知能と自然言語処理の技術について説明します。" --output tech_intro.mp3
 ```
 
-### Markdown到语音转换示例
+### PPTからビデオへの変換例
 
 ```bash
-# 将文档标题页转换为语音
-python markdown_to_speech.py README.md --output readme_intro.mp3
+# 日本語講座PPTの変換
+python ppt_to_narrated_video.py japanese_lesson.pptx --output lesson_video.mp4
 
-# 将日语教程转换为语音
-python markdown_to_speech.py data/text/japanese_tutorial.md --output japanese_lesson.mp3 --clean
+# ビジネスプレゼンテーションPPTの変換（最小時間を設定）
+python ppt_to_narrated_video.py business_presentation.pptx --output business_video.mp4 --min-duration 6.0
 ```
 
-### 文本分析示例
+### テキスト変換の例
 
 ```bash
-# 将日文句子转换为不同形式
-python main.py text --convert "日本語の自然言語処理は興味深いです。" --to-hiragana --to-romaji
+# 文章をひらがなに変換
+python main.py text --convert "日本語は面白いです。" --to-hiragana
+# 出力: にほんごはおもしろいです。
+
+# 文章をローマ字に変換
+python main.py text --convert "日本語は面白いです。" --to-romaji
+# 出力: nihongo wa omoshiroi desu.
 ```
 
-## 排障指南
+## 注意事項
 
-问题：运行时出现 "gtts.tts.gTTSError" 错误
-- 原因：没有互联网连接或 Google TTS 服务不可用
-- 解决方法：检查网络连接，稍后重试
+1. **ネットワーク要件**：Google TTS機能はインターネット接続が必要です。
 
-问题：日语文本转换功能不可用
-- 原因：未安装 janome 或 pykakasi
-- 解决方法：执行 `pip install janome pykakasi`
+2. **ファイル形式**：
+   - 音声生成はデフォルトでMP3形式
+   - PPTは.pptおよび.pptx形式をサポート
+   - テキストファイルはUTF-8エンコーディングを使用する必要があります
 
-问题：Markdown转语音时出现格式问题
-- 原因：特殊的Markdown格式可能未被正确处理
-- 解决方法：尝试先使用`--clean`选项查看处理后的文本，然后根据需要修改源Markdown文件
+3. **依存関係**：
+   - 異なる機能には異なる依存パッケージが必要
+   - requirements.txtに従って必要な依存関係をすべてインストールしてください
 
-## 许可
+4. **LibreOffice**：
+   - PPTからビデオへの変換機能では、高品質スライドをエクスポートするためにLibreOfficeを使用可能
+   - インストールされていない場合、代替方法で簡易画像を生成します
+
+5. **処理制限**：
+   - Google TTSは1回のリクエストで処理できるテキストの長さに制限があります
+   - 大きなPPTファイルの処理には時間がかかることがあります
+
+## トラブルシューティング
+
+**問題**：音声生成で「gTTSError」エラーが発生
+- **原因**：ネットワーク接続の問題またはGoogleサービスが一時的に利用できない
+- **解決方法**：ネットワーク接続を確認し、後で再試行してください
+
+**問題**：テキスト変換機能が動作しない
+- **原因**：janomeまたはpykakasiがインストールされていない
+- **解決方法**：`pip install janome pykakasi`を実行してください
+
+**問題**：PPTからビデオへの変換でスライド画像の品質が悪い
+- **原因**：LibreOfficeがインストールされていない
+- **解決方法**：LibreOfficeをインストールするか、PPT形式を調整してください
+
+**問題**：ビデオ生成プロセス中に「No module named 'moviepy'」と表示される
+- **原因**：moviepyがインストールされていない
+- **解決方法**：`pip install moviepy`を実行してください
+
+**問題**：大きなファイルを処理する際にメモリエラーが発生
+- **原因**：システムメモリ不足
+- **解決方法**：他のアプリケーションを閉じるか、システムメモリを増やしてください
+
+## 今後の計画
+
+- Webインターフェースの追加（ブラウザでの使用が容易に）
+- より多くの音声合成エンジンのサポート
+- 複数ファイルを処理するバッチ処理機能の追加
+- より多くのビデオ形式と品質オプションの提供
+- PPTアニメーション効果のサポート追加
+
+## ライセンス
 
 MIT
 
 ## 作者
-jacky wangsh
-Created: March 29, 2025
+
+作成: 2025年3月
+
+---
+
+*このツールは教育および個人利用のみを目的としています。Google TTSサービスを使用する際は、関連するサービス規約に従ってください。*

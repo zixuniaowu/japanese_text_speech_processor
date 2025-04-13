@@ -252,7 +252,7 @@ python main.py text --convert "日本語は面白いです。" --to-romaji
 MIT
 
 ## 作者
-
+jacky wang
 作成: 2025年3月
 
 ---
